@@ -10,6 +10,7 @@ void *reallocate(void *pointer, size_t oldSize, size_t newSize)
         return NULL;
     }
     void *result = realloc(pointer, newSize);
-    if (result == NULL) exit(1);
+    if (result == NULL)
+        exit(1);
     return result;
 }
