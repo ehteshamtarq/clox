@@ -2,7 +2,8 @@
     "files.associations": {
         "memory.h": "c",
         "stdint.h": "c",
-        "common.h": "c"
+        "common.h": "c",
+        "debug.h": "c"
     },
     "C_Cpp.errorSquiggles": "disabled"
 }
