@@ -2,6 +2,7 @@
 
 #include "debug.h"
 #include "value.h"
+#include "chunk.h"
 
 void disassembleChunk(Chunk *chunk, const char *name)
 {
@@ -31,14 +32,14 @@ static int constantInstruction(const char *name, Chunk *chunk,
 int disassembleInstruction(Chunk *chunk, int offset)
 {
     printf("%04d ", offset);
-    if (offset > 0 &&
-        chunk->lines[offset] == chunk->lines[offset - 1])
+    int line = getLine(chunk, offset);
+    if (offset > 0 && line == getLine(chunk, offset - 1))
     {
-        printf(" | ");
+        printf("   | ");
     }
     else
     {
-        printf("%4d ", chunk->lines[offset]);
+        printf("%4d ", line);
     }
     uint8_t instruction = chunk->code[offset];
     switch (instruction)
