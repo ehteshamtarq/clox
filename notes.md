@@ -38,4 +38,8 @@ Here, the numbers 0000 and 0002 are byte offsets:
 
 - **Virtual Machines** - Separation of Concerns: The VM allows the interpreter to separate parsing and compilation from execution. The front-end of the interpreter translates source code into an intermediate bytecode representation, which the VM then executes. This separation simplifies the interpreter's overall design and makes it easier to maintain.
 
-- In the book, a **static global variable** is used to represent the **VM** instance. This simplifies the code because you don’t need to pass a VM pointer around to every function that needs access to it.
+- A **static global variable** is used to represent the **VM** instance. This simplifies the code because you don’t need to pass a VM pointer around to every function that needs access to it.
+
+- **VM.ip** -**instruction pointer** As the VM works its way through the bytecode, it keeps track of where it is—the location of the instruction currently being executed. We don’t use a local variable inside run() for this because eventually other functions will need to access it. Instead, we store it as a field in VM.
+
+- **static InterpretResult run()** Each turn through that loop, we read and execute a single bytecode instruction.  Given a numeric opcode, we need to get to the right C code that implements that instruction’s semantics. This process is called **decoding** or **dispatching** the instruction.
