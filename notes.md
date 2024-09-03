@@ -1,0 +1,41 @@
+# **KEY CONCEPTS**
+
+- **Constant Pool**: In the context of the Java Virtual Machine (JVM), the constant pool is a specific section within each class file that stores all the constants and literals needed by that class. The constant pool is an essential part of the .class file format.
+
+- **Single Pool**: A simplified constant pool where all types of constants are stored together in a single list.
+
+- **chunk.c** deals with the overall structure of bytecode, including managing and writing bytecode instructions and constants.
+chunk.c contains the Chunk structure that includes both bytecode and a ValueArray for constants.
+
+- **value.c** is concerned with the handling and representation of values stored in dynamic arrays used within the interpreter.
+Data Structures. value.c focuses on the ValueArray and operations related to Value types.
+
+- **Bytecode Array** (code): An array of bytes that represent executable instructions.
+- **Constant Pool** : An array that stores constant values used in the code, such as numbers and strings.
+- **Line Information** (lines): An array of integers that stores the line number for each corresponding bytecode instruction. This is used for debugging and error reporting.
+
+
+- **Output Breakdown**:
+
+0000: This is the byte offset in the bytecode array where the instruction starts.
+123: This is the source code line number for the instruction at offset 0000.
+OP_CONSTANT: This is the opcode for the instruction at offset 0000. It indicates that the instruction is loading a constant value.
+0: This is the operand for the OP_CONSTANT instruction. It refers to the index 0 in the constant pool where the value 1.2 is stored.
+'1.2': This is the constant value being loaded by the OP_CONSTANT instruction from the constant pool.
+0002: This is the next byte offset for the following instruction.
+|: This symbol indicates that the instruction at offset 0002 is from the same line 123 as the previous instruction.
+OP_RETURN: This is the opcode for the instruction at offset 0002, indicating a return from the current function or program
+
+- When a program is compiled into bytecode, it is represented as a sequence of bytes. Each instruction in the bytecode is an opcode (a byte that specifies what operation to perform) followed by zero or more operands (additional bytes that provide necessary data for the operation).
+The byte offset is the index or position of a particular byte or instruction relative to the beginning of the bytecode array (or chunk).
+
+Here, the numbers 0000 and 0002 are byte offsets:
+
+0000: This is the offset of the OP_CONSTANT opcode. It is the first byte in the chunk, so its offset is 0.
+0002: This is the offset of the OP_RETURN opcode. It comes after the OP_CONSTANT opcode (1 byte) and its operand (1 byte), so its offset is 2.
+
+- **OP_CONSTANT_LONG** would be needed in the interpreter in cases where a chunk of code contains more than 256 unique constants.
+
+- **Virtual Machines** - Separation of Concerns: The VM allows the interpreter to separate parsing and compilation from execution. The front-end of the interpreter translates source code into an intermediate bytecode representation, which the VM then executes. This separation simplifies the interpreter's overall design and makes it easier to maintain.
+
+- In the book, a **static global variable** is used to represent the **VM** instance. This simplifies the code because you don’t need to pass a VM pointer around to every function that needs access to it.
