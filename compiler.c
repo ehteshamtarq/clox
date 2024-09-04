@@ -3,6 +3,11 @@
 #include "compiler.h"
 #include "scanner.h"
 
+
+/*The first column is the line number, the second is the numeric value of the
+token type, and then finally the lexeme. That last empty lexeme on line 2 is the
+EOF token.*/
+
 void compile(const char *source)
 {
     initScanner(source);

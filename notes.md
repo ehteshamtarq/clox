@@ -45,3 +45,16 @@ Here, the numbers 0000 and 0002 are byte offsets:
 - **static InterpretResult run()** Each turn through that loop, we read and execute a single bytecode instruction.  Given a numeric opcode, we need to get to the right C code that implements that instruction’s semantics. This process is called **decoding** or **dispatching** the instruction.
 
 - **Scanner** The scanner is the first part of the compilation process that interacts with the source code, and it needs to maintain its state as it scans through the code line by line, character by character. The scanner keeps track of where it is in the source code using pointers, allowing it to identify lexemes (basic code units) that form valid tokens. For error handling, the line number is tracked, which is crucial for generating helpful error messages when something goes wrong.
+
+- The first column is the line number, the second is the numeric value of the token type, and then finally the lexeme. That last empty lexeme on line 2 is the EOF token.
+
+## **Recognizing keywords in the Clox interpreter**
+
+**Clox** uses the idea of using a **trie**. A trie is a tree-like data structure where each node represents a character in a string. This makes it efficient to search for words with common prefixes.
+
+For instance, to determine if "cardigan" is a keyword:
+- Start at the root node.
+- Check the first character "c". There is a child node for "c", so move there.
+- The next character is "a". If there isn’t a child node for "a" (which there isn’t in the case of Lox), we can immediately rule out "cardigan" as a keyword.
+
+<img  alt="railroad diagram" src="/images/railroad_diagram.PNG">
