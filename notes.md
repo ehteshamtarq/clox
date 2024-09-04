@@ -45,5 +45,3 @@ Here, the numbers 0000 and 0002 are byte offsets:
 - **static InterpretResult run()** Each turn through that loop, we read and execute a single bytecode instruction.  Given a numeric opcode, we need to get to the right C code that implements that instruction’s semantics. This process is called **decoding** or **dispatching** the instruction.
 
 - **Scanner** The scanner is the first part of the compilation process that interacts with the source code, and it needs to maintain its state as it scans through the code line by line, character by character. The scanner keeps track of where it is in the source code using pointers, allowing it to identify lexemes (basic code units) that form valid tokens. For error handling, the line number is tracked, which is crucial for generating helpful error messages when something goes wrong.
-
-

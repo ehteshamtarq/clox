@@ -6,6 +6,7 @@
 void compile(const char *source)
 {
     initScanner(source);
+    int line = -1;
     for (;;)
     {
         Token token = scanToken();
