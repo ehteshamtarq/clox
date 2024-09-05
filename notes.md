@@ -58,3 +58,10 @@ For instance, to determine if "cardigan" is a keyword:
 - The next character is "a". If there isn’t a child node for "a" (which there isn’t in the case of Lox), we can immediately rule out "cardigan" as a keyword.
 
 <img  alt="railroad diagram" src="/images/railroad_diagram.PNG">
+
+
+## **Recognizing Number literals in Clox interpreter**
+
+**DFA** is a type of state machine or finite state machine (FSM) where each state has a deterministic transition based on input. At any given time, the machine is in one specific state and transitions to another state based on input. DFAs are represented as graphs where nodes (states) are connected by directed edges (transitions). Each edge is labeled with an input character. For example, here’s a DFA that recognizes number literals
+
+<img  alt="DFA Nummber Literal diagram" src="/images/DFA_number_literal.PNG">
