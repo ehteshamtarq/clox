@@ -82,21 +82,21 @@ static void emitByte(uint8_t byte)
     writeChunk(currentChunk(), byte, parser.previous.line);
 }
 
-static void endCompiler()
-{
-    emitReturn();
-}
-
 static void emitReturn()
 {
     emitByte(OP_RETURN);
+}
+
+static void endCompiler()
+{
+    emitReturn();
 }
 
 static void emitBytes(uint8_t byte1, uint8_t byte2)
 {
     emitByte(byte1);
     emitByte(byte2);
-}   
+}
 
 /*The first column is the line number, the second is the numeric value of the
 token type, and then finally the lexeme. That last empty lexeme on line 2 is the
