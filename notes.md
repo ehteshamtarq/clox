@@ -65,3 +65,5 @@ For instance, to determine if "cardigan" is a keyword:
 **DFA** is a type of state machine or finite state machine (FSM) where each state has a deterministic transition based on input. At any given time, the machine is in one specific state and transitions to another state based on input. DFAs are represented as graphs where nodes (states) are connected by directed edges (transitions). Each edge is labeled with an input character. For example, here’s a DFA that recognizes number literals
 
 <img  alt="DFA Nummber Literal diagram" src="/images/DFA_number_literal.PNG">
+
+
