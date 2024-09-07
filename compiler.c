@@ -6,6 +6,10 @@
 #include "scanner.h"
 #include "chunk.h"
 
+#ifdef DEBUG_PRINT_CODE
+#include "debug.h"
+#endif
+
 typedef struct
 {
     Token current;
@@ -135,6 +139,12 @@ static void emitConstant(Value value)
 static void endCompiler()
 {
     emitReturn();
+#ifdef DEBUG_PRINT_CODE
+    if (!parser.hadError)
+    {
+        disassembleChunk(currentChunk(), "code");
+    }
+#endif
 }
 /*The binary() function is a central part of parsing binary expressions in this compiler.
 It relies on knowing the precedence of operators to correctly parse expressions like 1 + 2 * 3 (resulting in 1 + (2 * 3))*/
