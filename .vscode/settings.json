@@ -4,7 +4,8 @@
         "stdint.h": "c",
         "common.h": "c",
         "debug.h": "c",
-        "type_traits": "c"
+        "type_traits": "c",
+        "value.h": "c"
     },
     "C_Cpp.errorSquiggles": "disabled"
 }
