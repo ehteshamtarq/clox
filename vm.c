@@ -1,22 +1,35 @@
+#include <stdarg.h>
 #include <stdio.h>
 
 #include "common.h"
 #include "compiler.h"
 #include "debug.h"
 #include "vm.h"
+#include "value.h"
 #include "memory.h"
 
 VM vm;
 
 static void resetStack()
 {
-    vm.stackCount = 0;
+    vm.stackTop = vm.stack;
+}
+
+static void runtimeError(const char *format, ...)
+{
+    va_list args;
+    va_start(args, format);
+    vfprintf(stderr, format, args);
+    va_end(args);
+    fputs("\n", stderr);
+    size_t instruction = vm.ip - vm.chunk->code - 1;
+    int line = vm.chunk->lines[instruction];
+    fprintf(stderr, "[line %d] in script\n", line);
+    resetStack();
 }
 
 void initVM()
 {
-    vm.stack = NULL;
-    vm.stackCapacity = 0;
     resetStack();
 }
 
@@ -26,28 +39,40 @@ void freeVM()
 
 void push(Value value)
 {
-    if (vm.stackCapacity < vm.stackCount + 1)
-    {
-        int oldCapacity = vm.stackCapacity;
-        vm.stackCapacity = GROW_CAPACITY(oldCapacity);
-        vm.stack = GROW_ARRAY(Value, vm.stack,
-                              oldCapacity, vm.stackCapacity);
-    }
-
-    vm.stack[vm.stackCount] = value;
-    vm.stackCount++;
+    *vm.stackTop = value;
+    vm.stackTop++;
 }
 
 Value pop()
 {
-    vm.stackCount--;
-    return vm.stack[vm.stackCount];
+    vm.stackTop--;
+    return *vm.stackTop;
+}
+
+static Value peek(int distance)
+{
+    return vm.stackTop[-1 - distance];
 }
 
 static InterpretResult run()
 {
 #define READ_BYTE() (*vm.ip++)
 #define READ_CONSTANT() (vm.chunk->constants.values[READ_BYTE()])
+    // #define BINARY_OP(valueType, op)                        \
+//     do                                                  \
+//     {                                                   \
+//         if (!IS_NUMBER(peek(0)) || !IS_NUMBER(peek(1))) \
+//         {
+
+    //     runtimeError("Operands must be numbers.");
+    //     return INTERPRET_RUNTIME_ERROR;
+    // }
+
+    // double b = AS_NUMBER(pop());
+    // double a = AS_NUMBER(pop());
+    // push(valueType(a op b));
+    // }
+
 #define BINARY_OP(op)     \
     do                    \
     {                     \
@@ -55,13 +80,14 @@ static InterpretResult run()
         double a = pop(); \
         push(a op b);     \
     } while (false)
+
     for (;;)
     {
 #ifdef DEBUG_TRACE_EXECUTION
         disassembleInstruction(vm.chunk,
                                (int)(vm.ip - vm.chunk->code));
         printf("    ");
-        for (Value *slot = vm.stack; slot < vm.stack + vm.stackCount; slot++)
+        for (Value *slot = vm.stack; slot < vm.stackTop; slot++)
         {
             printf("[ ");
             printValue(*slot);
@@ -78,11 +104,6 @@ static InterpretResult run()
             push(constant);
             break;
         }
-        case OP_NEGATE:
-        {
-            push(-pop());
-            break;
-        }
         case OP_ADD:
             BINARY_OP(+);
             break;
@@ -95,6 +116,21 @@ static InterpretResult run()
         case OP_DIVIDE:
             BINARY_OP(/);
             break;
+        // case OP_NEGATE:
+        // {
+        //     if (!IS_NUMBER(peek(0)))
+        //     {
+        //         runtimeError("Operand must be a number.");
+        //         return INTERPRET_RUNTIME_ERROR;
+        //     }
+        //     push(NUMBER_VAL(-AS_NUMBER(pop())));
+        //     break;
+        // }
+        case OP_NEGATE:
+        {
+            push(-pop());
+            break;
+        }
         case OP_RETURN:
         {
             printValue(pop());
