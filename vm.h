@@ -12,6 +12,7 @@ typedef struct
     uint8_t *ip;            // The instruction pointer (IP).
     Value stack[STACK_MAX]; // Stack Implementation in the VM
     Value *stackTop;        // To keep track of the top of the stack
+    Obj* objects;
 } VM;
 
 typedef enum
@@ -20,6 +21,8 @@ typedef enum
     INTERPRET_COMPILE_ERROR,
     INTERPRET_RUNTIME_ERROR
 } InterpretResult;
+
+extern VM vm;
 
 void initVM();
 void freeVM();
