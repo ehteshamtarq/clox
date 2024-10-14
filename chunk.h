@@ -25,11 +25,11 @@ typedef enum
     OP_RETURN,
 } OpCode;
 
-typedef struct
-{
-    int offset;
-    int line;
-} LineStart;
+// typedef struct
+// {
+//     int offset;
+//     int line;
+// } LineStart;
 
 typedef struct
 {

@@ -55,6 +55,8 @@ ObjString *takeString(char *chars, int length)
 }
 
 // memcpy() copies the actual characters from the source string to the new heap-allocated memory.
+//in compiler.c it calls this function to handle strings
+// ALLOCATE is defined in memory.h
 ObjString *copyString(const char *chars, int length)
 {
     uint32_t hash = hashString(chars, length);
