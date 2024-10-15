@@ -13,6 +13,7 @@ typedef struct
     uint8_t *ip;            // The instruction pointer (IP).
     Value stack[STACK_MAX]; // Stack Implementation in the VM
     Value *stackTop;        // To keep track of the top of the stack
+    Table globals;
     Table strings;
     Obj* objects;
 } VM;
