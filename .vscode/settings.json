@@ -5,7 +5,8 @@
         "common.h": "c",
         "debug.h": "c",
         "type_traits": "c",
-        "value.h": "c"
+        "value.h": "c",
+        "typeinfo": "c"
     },
     "C_Cpp.errorSquiggles": "disabled"
 }
