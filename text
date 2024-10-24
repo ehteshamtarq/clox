@@ -1,15 +1,21 @@
-print "for loop";
+// print "for loop";
 
-for(var i = 0; i < 10; i= i + 1){
-    print i;
-}
+// for(var i = 0; i < 10; i= i + 1){
+//     print i;
+// }
 
 
-print "while loop";
+// print "while loop";
 
-var j = 0;
+// var j = 0;
 
-while (j < 10){
-    print j;
-    j = j + 1;
-}
+// while (j < 10){
+//     print j;
+//     j = j + 1;
+// }
+
+
+fun areWeHavingItYet() {
+    print "Yes we are!";
+    }
+    print areWeHavingItYet;
